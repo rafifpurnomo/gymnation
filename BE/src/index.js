@@ -3,9 +3,14 @@ const PORT = process.env.PORT;
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const userRoute = require('./routes/user.routes')
+const authRoute = require('./routes/auth.routes')
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/auth", authRoute)
+app.use("/user", userRoute);
 
 app.listen(PORT, () => {
   console.log(`

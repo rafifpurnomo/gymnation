@@ -17,6 +17,10 @@ app.use("/carousel", carouselRoute);
 app.listen(PORT, () => {
   console.log(`
       ## MAIN ROUTE
-      -listening at http://localhost:${PORT}
+      > listening at http://localhost:${PORT}
+
+      ## UNTUK PENGGUNAAN API DI MOBILE
+      > ngrok http {PORT}
+      jalankan diterminal lain
       `);
 });

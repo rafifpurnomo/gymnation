@@ -1,3 +1,4 @@
+const transporter = require("../config/mail.config");
 const userModel = require("../model/user");
 
 const addUser = async (req, res) => {
@@ -46,7 +47,9 @@ const getAllUser = async (req, res) => {
   try {
     const [data] = await userModel.getAllUser();
     if (data.length > 0) {
-      res.status(200).json({ message: "menampilkan data semua user", data: data });
+      res
+        .status(200)
+        .json({ message: "menampilkan data semua user", data: data });
     } else {
       res.json({
         massage: "Tidak ada user terdaftar",
@@ -57,8 +60,51 @@ const getAllUser = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { id_user, newPass } = req.body;
+  try {
+    await userModel.changePassword(id_user, newPass);
+    res.json({
+      massage: "password berhasil diubah",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await userModel.searchByEmail(email);
+    if (!user) {
+      return res.status(404).json({ message: "Email tidak ditemukan." });
+    }
+
+    const resetLink = "https://daniellieandri21.github.io/Gymnation/";
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL,
+      to : email,
+      subject: "Reset Password",
+      html: `<p>Anda telah meminta untuk mengatur ulang password. Klik link berikut untuk mengatur ulang password Anda:</p>
+             <a href="${resetLink}">${resetLink}</a>
+             <p>Link ini hanya berlaku selama 15 menit.</p>`,
+    };
+
+    // const RS = 
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Email reset password telah dikirim." });
+  } catch (error) {
+    console.error("Error mengirim email reset password:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 module.exports = {
   addAdmin,
   addUser,
-  getAllUser
+  getAllUser,
+  changePassword,
+  forgetPassword,
 };

@@ -35,6 +35,17 @@ const deleteUser = async (id) => {
     return conn.execute(SQLQuery, [id]);
 };
 
+const changePassword = async (id, newPassword) => {
+    const saltRounds = 10;
+    const hashedPass = await bcrypt.hash(newPassword, saltRounds);
+    const SQLQuery = "UPDATE user SET password = ? WHERE id_user = ?"
+    return conn.execute(SQLQuery, [hashedPass, id]);
+}
+
+const updateProfile = async (id, first_name, last_name, email, img_path) => {
+
+}
+
 module.exports = {
     getAllUser,
     addAdmin,
@@ -42,4 +53,5 @@ module.exports = {
     searchByID,
     searchByEmail,
     deleteUser,
+    changePassword
 }

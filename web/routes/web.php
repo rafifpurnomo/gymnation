@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\carouselController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [carouselController::class, 'mainCarousel'],function () {
+    return view('home');
+})->name('home');

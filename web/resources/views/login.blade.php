@@ -23,27 +23,41 @@
             <img class="GymnationLogo" src="{{ asset('assets/icon-appbar.png') }}" alt="Gymnation Logo" />
             <div class="input">
                 <div class="container">
-                    <div class="inputMail">
-                        <label for="email">Email</label>
-                        <input type="email" id="email">
-                    </div>
-                    <div class="inputPass">
-                        <label for="password">Password</label>
-                        <input type="password" id="password">
-                        <div class="lupaPassword">
-                            <a href="">
-                                lupa password
-                            </a>
+                    <form action="{{ route('login.process') }}" method="POST" class="container">
+                        @csrf
 
+                        <div class="inputMail">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="@error('email') is-invalid @enderror" required>
+                            @error('email')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
-                    <div class="btn">
-                        <button>login</button>
-                    </div>
+                        <div class="inputPass">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="@error('password') is-invalid @enderror"
+                                required>
+                            @error('password')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                            <div class="lupaPassword">
+                                <a href="">
+                                    lupa password
+                                </a>
+                            </div>
+                        </div>
+                        @if ($errors->has('login'))
+                            <div class="error-message">{{ $errors->first('login') }}</div>
+                        @endif
+                        <div class="btn">
+                            <button type="submit">login</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
 
 </html>

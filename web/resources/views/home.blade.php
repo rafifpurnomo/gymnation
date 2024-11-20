@@ -179,6 +179,10 @@
                     <i data-feather="phone"></i>
                     <input type="text" placeholder="No HP" />
                 </div>
+                <div class="input-group">
+                    <i data-feather="message-square"></i>
+                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                </div>
                 <button type="submit" class="btn">Kirim Pesan</button>
             </form>
         </div>

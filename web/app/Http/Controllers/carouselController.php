@@ -15,6 +15,12 @@ class carouselController extends Controller
         return view('home', [ 'dataCarousel' => $dataCarousel]);
     }
 
+    public function adminMainCarousel(){
+        $dataCarousel =$this->getAllDataCarousel();
+
+        return view('adminCarousel', [ 'dataCarousel' => $dataCarousel]);
+    }
+
     public function getAllDataCarousel()
     {
         $client = new Client();

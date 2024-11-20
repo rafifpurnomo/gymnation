@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\authController;
 use App\Http\Controllers\carouselController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,17 @@ Route::get('/', [carouselController::class, 'mainCarousel'],function () {
     return view('home');
 })->name('home');
 
-Route::get('/login', function () {
+Route::get('/loginPage', function () {
     return view('login');
-})->name('login');
+})->name('login.form');
+Route::post('/login', [authController::class, 'login'])->name('login.process');
 
+Route::middleware(['checkLogin'])->group(function () {
+    Route::get('/admin/Home',  function () {
+        return view('adminHome');
+    })->name('admin.home');
+    
+    Route::get('/admin/carouselSettings',  [carouselController::class, 'adminMainCarousel'], function () {
+        return view('adminCarousel');
+    })->name('admin.carousel');
+});

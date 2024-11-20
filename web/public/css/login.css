@@ -90,3 +90,13 @@ body {
     color: #ff6d00;
     transition: 0.2s linear;
 }
+
+.is-invalid {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

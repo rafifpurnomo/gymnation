@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const data = window.apiData;
-    console.log(data.DataCarousel.data)
-    console.log(data)
     loadDataCarousel(data)
 })
 

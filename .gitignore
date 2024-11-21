@@ -136,3 +136,4 @@ dist
 #Database Tamplate
 .sql
 DB_Tamplate.sql
+note.md

@@ -69,6 +69,11 @@
     justify-content: flex-end;
 }
 
+.title{
+    text-align: center;
+    margin: 50px 0px 50px 0px;
+}
+
 .tableData{
     margin-top: 100px;
     display: flex;
@@ -97,31 +102,6 @@
 
 #carouselTable th {
     font-weight: bold;
-}
-
-.tambahCarousel{
-    margin: 50px 0px 50px 0px;
-    display: flex;
-    justify-content: center;
-}
-
-.tambahCarousel button {
-    width: 200px;
-    height: 40px;
-    border-radius: 10px;
-    font-size: 15px;
-    border: 2px solid white;
-    background-color: transparent;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.tambahCarousel button:hover {
-    border: 2px solid #ff6d00;
-    background-color: transparent;
-    color: #ff6d00;
-    transition: 0.2s linear;
 }
 
 .delete-btn{

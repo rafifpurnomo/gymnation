@@ -31,6 +31,11 @@ Route::middleware(['checkLogin'])->group(function () {
         return view('adminHome');
     })->name('admin.home');
     
+    Route::get('/admin/Laporan',  [pengaudanController::class, 'mainLaporan'],function () {
+        return view('adminLaporan');
+    })->name('admin.laporan');
+    Route::delete('/admin/deleteLaporan', [pengaudanController::class, 'deletePengaduan'])->name('admin.deletePengaduan');
+    
     Route::get('/admin/carouselSettings',  [carouselController::class, 'adminMainCarousel'], function () {
         return view('adminCarousel');
     })->name('admin.carousel');

@@ -16,7 +16,7 @@ const addPengaduan = async (req, res) => {
   }
 };
 
-const getAllpengaduan = async () => {
+const getAllpengaduan = async (req, res) => {
   try {
     const [data] = await pengaduanModel.getAllpengaduan();
 
@@ -41,11 +41,13 @@ const deletePengaduan = async (req, res) => {
     if (result[0].affectedRows === 0) {
       return res
         .status(404)
-        .json({ message: "data pengajuan tidak ditemukan" });
+        .json({ succes: false, message: "data pengajuan tidak ditemukan" });
     }
-    res.status(200).json({ message: "data pengajuan dihapus" });
+    res.status(200).json({ succes: true, message: "data pengajuan dihapus" });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res
+      .status(500)
+      .json({ succes: false, message: "Server error", error: error.message });
   }
 };
 

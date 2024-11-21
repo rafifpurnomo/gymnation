@@ -28,6 +28,10 @@ Route::get('/loginPage', function () {
 Route::post('/login', [authController::class, 'login'])->name('login.process');
 Route::post('/logout', [authController::class, 'logout'])->name('logout');
 
+Route::get('/registerPage', function () {
+    return view('register');
+})->name('login.form');
+
 Route::get('/resetPassword/{token}', [resetPass::class, 'showResetPasswordForm'])->name('resetPassword');
 Route::post('/requestResetPassword', [resetPass::class, 'requestResetPass'])->name('requestReset.password');
 Route::post('/resetPassword/{token}', [resetPass::class, 'resetPassword'])->name('reset.password');

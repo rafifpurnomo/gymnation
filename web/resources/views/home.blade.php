@@ -32,7 +32,7 @@
             <a href="#about">Our Program</a>
             <a href="#class">Our Class</a>
             <a href="#contact">Contact</a>
-            <a href="">
+            <a href="/registerPage">
                 <button class="btn-resgist">Register</button>
             </a>
         </div>

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Gymnation</title>
 
     <!-- Fonts -->
@@ -17,6 +18,7 @@
 
     <!-- My Styke -->
     <link rel="stylesheet" href="{{ asset('css/home.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
 </head>
 
 <body>
@@ -166,24 +168,25 @@
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d504.6834806703691!2d107.60391708896945!3d-6.953349186570534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e9b1a75a49d7%3A0xc4ef80b95e4a7b20!2sGymNation-Bdg!5e0!3m2!1sid!2sid!4v1728626045174!5m2!1sid!2sid"
                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="maps"></iframe>
-            <form action="">
+            <form action="" onsubmit="addPengaduan(event)">
+                @csrf
                 <div class="input-group">
                     <i data-feather="user"></i>
-                    <input type="text" placeholder="Nama" />
+                    <input type="text" placeholder="Nama" id="namaPengaduan" required />
                 </div>
                 <div class="input-group">
                     <i data-feather="mail"></i>
-                    <input type="text" placeholder="Email" />
+                    <input type="email" placeholder="Email" id="emailPengaduan" required/>
                 </div>
                 <div class="input-group">
                     <i data-feather="phone"></i>
-                    <input type="text" placeholder="No HP" />
+                    <input type="tel" placeholder="No HP" id="noHpPengaduan" required/>
                 </div>
                 <div class="input-group">
                     <i data-feather="message-square"></i>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <textarea name="" id="pesanPengaduan" cols="30" rows="10" required></textarea>
                 </div>
-                <button type="submit" class="btn">Kirim Pesan</button>
+                <button type="submit" class="btn" >Kirim Pesan</button>
             </form>
         </div>
     </section>
@@ -223,6 +226,8 @@
             DataCarousel: @json($dataCarousel)
         };
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

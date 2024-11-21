@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\carouselController;
+use App\Http\Controllers\pengaudanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [carouselController::class, 'mainCarousel'],function () {
     return view('home');
 })->name('home');
+Route::post('/addPengaduan', [pengaudanController::class, 'addPengaduan'])->name('addPengaduan.process');
 
 Route::get('/loginPage', function () {
     return view('login');

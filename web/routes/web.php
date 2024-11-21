@@ -25,6 +25,7 @@ Route::get('/loginPage', function () {
     return view('login');
 })->name('login.form');
 Route::post('/login', [authController::class, 'login'])->name('login.process');
+Route::post('/logout', [authController::class, 'logout'])->name('logout');
 
 Route::middleware(['checkLogin'])->group(function () {
     Route::get('/admin/Home',  function () {
@@ -41,4 +42,8 @@ Route::middleware(['checkLogin'])->group(function () {
     })->name('admin.carousel');
     Route::delete('/admin/deleteCarousel', [carouselController::class, 'deleteCarousel'])->name('admin.deleteCarousel');
     Route::post('/admin/addCarousel', [carouselController::class, 'addCarousel'])->name('admin.addCarousel');
+    
+    Route::get('/admin/profile',  function () {
+        return view('adminProfile');
+    })->name('admin.profile');
 });

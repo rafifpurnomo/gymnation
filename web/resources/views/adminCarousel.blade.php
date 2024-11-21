@@ -18,7 +18,7 @@
             <div class="nav-links">
                 <a href="/admin/carouselSettings" class="nav-item"> carousel </a>
                 <a href="/admin/Laporan" class="nav-item"> Laporan </a>
-                <a href="#" class="nav-item"> Profil </a>
+                <a href="/admin/profile" class="nav-item"> Profil </a>
             </div>
         </div>
         <div class="logout-container">

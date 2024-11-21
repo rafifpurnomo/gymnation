@@ -5,5 +5,6 @@ const verifyJWT = require('../middleware/verifyJWT');
 
 router.post('/login', authController.login);
 router.get('/me', verifyJWT, authController.getUserLoggedIn);
+router.post('/logout',authController.logout);
 
 module.exports = router;

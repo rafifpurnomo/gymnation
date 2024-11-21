@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class authController extends Controller
 {
@@ -35,9 +35,9 @@ class authController extends Controller
             ]);
             $body = json_decode($response->getBody(), true);
             $token = $body['token'];
-            
+
             session(['token' => $token]);
-            
+
             $userResponse = $client->get('http://localhost:4000/auth/me', [
                 'headers' => [
                     'Authorization' => "Bearer {$token}",
@@ -46,11 +46,11 @@ class authController extends Controller
             $userData = json_decode($userResponse->getBody(), true);
             if (isset($userData['data'][0][0]['role'])) {
                 $role = $userData['data'][0][0]['role'];
-                
+
                 if ($role === 'admin') {
                     return redirect()->route('admin.home');
                 } else {
-                    return  redirect()->route('home');
+                    return redirect()->route('home');
                 }
             }
             return redirect()->route('login.form')->withErrors(['login' => 'Invalid user role.']);
@@ -62,5 +62,18 @@ class authController extends Controller
                 return back()->withErrors(['login' => 'Login failed: ' . $e->getMessage()])->withInput();
             }
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Return JSON for AJAX, or redirect for non-AJAX
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
+        return redirect()->route('login.form');
     }
 }

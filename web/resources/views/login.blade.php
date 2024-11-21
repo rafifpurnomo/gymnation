@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Login Page</title>
 
     <!-- Fonts -->
@@ -15,6 +16,8 @@
 
     <!-- My Styke -->
     <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
 </head>
 
 <body>
@@ -41,7 +44,7 @@
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
                             <div class="lupaPassword">
-                                <a href="">
+                                <a href="" id="lupaPasswordButton">
                                     lupa password
                                 </a>
                             </div>
@@ -57,7 +60,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Pop-up -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Silahkan Masukan Email Anda</h2>
+            <form id="carouselForm">
+                <div class="emailInput">
+                    <label for="email">Email</label><br>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <br><br>
+                <div class="btn-submit">
+                    <button type="submit" id="submitBtn">submit</button>
+                </div>
+                <p id="countdownMessage"></p>
+            </form>
+        </div>
+    </div>
     <script src="{{ asset('js/login.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>

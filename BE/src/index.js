@@ -6,7 +6,8 @@ const app = express();
 const userRoute = require('./routes/user.routes');
 const authRoute = require('./routes/auth.routes');
 const carouselRoute = require('./routes/carousel.routes');
-const pengaduanRoute = require('./routes/pengaduan.routes')
+const pengaduanRoute = require('./routes/pengaduan.routes');
+const verifyJWT = require("./middleware/verifyJWT");
 
 app.use(cors());
 app.use(express.json());

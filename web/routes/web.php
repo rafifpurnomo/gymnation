@@ -3,6 +3,7 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\carouselController;
 use App\Http\Controllers\pengaudanController;
+use App\Http\Controllers\resetPass;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +28,12 @@ Route::get('/loginPage', function () {
 Route::post('/login', [authController::class, 'login'])->name('login.process');
 Route::post('/logout', [authController::class, 'logout'])->name('logout');
 
+Route::get('/resetPassword/{token}', [resetPass::class, 'showResetPasswordForm'])->name('resetPassword');
+Route::post('/requestResetPassword', [resetPass::class, 'requestResetPass'])->name('requestReset.password');
+Route::post('/resetPassword/{token}', [resetPass::class, 'resetPassword'])->name('reset.password');
+
 Route::middleware(['checkLogin'])->group(function () {
-    Route::get('/admin/Home',  function () {
+Route::get('/admin/Home',  function () {
         return view('adminHome');
     })->name('admin.home');
     

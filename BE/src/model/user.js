@@ -21,12 +21,12 @@ const addAdmin = async (first_name, last_name, email, plainpassword, role) => {
 }
 
 const searchByID = async (id) => {
-    const SQLQuery = "SELECT * FROM user WHERE id_user = ? ";
+    const SQLQuery = "SELECT * FROM user WHERE id_user = ?";
     return conn.execute(SQLQuery, [id]);
 }
 
 const searchByEmail = async (email) => {
-    const SQLQuery = "SELECT * FROM user WHERE email = ? ";
+    const SQLQuery = "SELECT * FROM user WHERE email = ?";
     return conn.execute(SQLQuery, [email]);
 }
 

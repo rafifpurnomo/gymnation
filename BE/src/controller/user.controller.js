@@ -1,5 +1,6 @@
 const transporter = require("../config/mail.config");
 const userModel = require("../model/user");
+const jwt = require("jsonwebtoken");
 
 const addUser = async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
@@ -65,10 +66,14 @@ const changePassword = async (req, res) => {
   try {
     await userModel.changePassword(id_user, newPass);
     res.json({
+      success: true,
       massage: "password berhasil diubah",
     });
+    
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
   }
 };
 
@@ -76,30 +81,48 @@ const forgetPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await userModel.searchByEmail(email);
+    const [userRows] = await userModel.searchByEmail(email);
+    const user = userRows[0];
+
     if (!user) {
-      return res.status(404).json({ message: "Email tidak ditemukan." });
+      return res
+        .status(404)
+        .json({ success: false, message: "Email tidak ditemukan." });
     }
 
-    const resetLink = "https://daniellieandri21.github.io/Gymnation/";
+    const token = jwt.sign({ id: user.id_user }, process.env.JWT_SECRET, {
+      expiresIn: "15m",
+    });
+
+    const resetLink = `http://127.0.0.1:8000/resetPassword/${token}`;
 
     const mailOptions = {
       from: process.env.AUTH_EMAIL,
-      to : email,
+      to: email,
       subject: "Reset Password",
-      html: `<p>Anda telah meminta untuk mengatur ulang password. Klik link berikut untuk mengatur ulang password Anda:</p>
-             <a href="${resetLink}">${resetLink}</a>
-             <p>Link ini hanya berlaku selama 15 menit.</p>`,
+      html: `
+        <h2>Anda telah meminta untuk mengatur ulang password.
+            Klik link berikut untuk mengatur ulang password Anda:</h2>
+        <h3>Link ini hanya berlaku selama 15 menit.</h3>
+        <a href="${resetLink}">${resetLink}</a>
+      `,
     };
 
-    // const RS = 
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email reset password telah dikirim." });
+    res.status(200).json({
+      success: true,
+      token: token,
+      message: "Email reset password telah dikirim.",
+    });
   } catch (error) {
     console.error("Error mengirim email reset password:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
   }
 };
+
+
 
 module.exports = {
   addAdmin,

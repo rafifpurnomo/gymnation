@@ -9,4 +9,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Test koneksi
+transporter.verify((error, success) => {
+  if (error) {
+      console.log('Error setup email:', error);
+  } else {
+      console.log('Server siap mengirim email');
+  }
+});
+
 module.exports = transporter;

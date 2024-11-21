@@ -70,7 +70,6 @@ class authController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        // Return JSON for AJAX, or redirect for non-AJAX
         if ($request->expectsJson()) {
             return response()->json(['success' => true]);
         }

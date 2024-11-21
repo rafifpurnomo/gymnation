@@ -39,4 +39,6 @@ Route::middleware(['checkLogin'])->group(function () {
     Route::get('/admin/carouselSettings',  [carouselController::class, 'adminMainCarousel'], function () {
         return view('adminCarousel');
     })->name('admin.carousel');
+    Route::delete('/admin/deleteCarousel', [carouselController::class, 'deleteCarousel'])->name('admin.deleteCarousel');
+    Route::post('/admin/addCarousel', [carouselController::class, 'addCarousel'])->name('admin.addCarousel');
 });

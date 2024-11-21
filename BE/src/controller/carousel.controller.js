@@ -46,6 +46,7 @@ const addCarouselData = async (req, res) => {
 
       res.status(200).json({
         message: "data carousel berhasil di tambahkan.",
+        success:true,
         data: RS,
       });
     }

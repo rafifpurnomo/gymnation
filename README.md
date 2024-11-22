@@ -16,7 +16,7 @@ Install gymnation depedencies with flutter
 
 ```bash
   git clone [repository link]
-  cd RekanPabrik/mobile
+  cd gymnation/mobile
   flutter pub get
 ```
 
@@ -25,7 +25,7 @@ Install gymnation depedencies with laravel
 
 ```bash
   git clone [repository link]
-  cd RekanPabrik/web
+  cd gymnation/web
   composer install
 ```
 
@@ -34,6 +34,6 @@ Install gymnation depedencies with node
 
 ```bash
   git clone [repository link]
-  cd RekanPabrik/BE
+  cd gymnation/BE
   npm install
 ```

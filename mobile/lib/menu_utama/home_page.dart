@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:project_tubes/menu_utama/notification_page.dart';
-import 'package:project_tubes/widget/main_menu_item.dart'; // Pastikan ini mengarah ke widget yang benar
-import 'package:project_tubes/menu_utama/see_all_page.dart';
-import 'package:project_tubes/menu_utama/food_page.dart';
-import 'package:project_tubes/menu_utama/class_page.dart';
-import 'package:project_tubes/menu_utama/discount_page.dart';
-import 'package:project_tubes/menu_utama/facility_page.dart';
-import 'package:project_tubes/menu_utama/account_page.dart';
+import 'package:gymnation/menu_utama/notification_page.dart';
+import 'package:gymnation/widget/main_menu_item.dart'; // Pastikan ini mengarah ke widget yang benar
+import 'package:gymnation/menu_utama/see_all_page.dart';
+import 'package:gymnation/menu_utama/food_page.dart';
+import 'package:gymnation/menu_utama/class_page.dart';
+import 'package:gymnation/menu_utama/discount_page.dart';
+import 'package:gymnation/menu_utama/facility_page.dart';
+import 'package:gymnation/menu_utama/account_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

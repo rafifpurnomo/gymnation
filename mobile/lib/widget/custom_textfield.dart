@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:project_tubes/login_screen/styles.dart';
+import 'package:gymnation/login_screen/styles.dart';
 
-class CustomTextfield extends StatelessWidget{
-  const CustomTextfield({
-    required this.controller, 
-    required this.textInputType,
-    required this.textInputAction,
-    required this.hint,
-    this.isObscure = false,
-    this.hasSuffix = false,
-    this.onPressed,
-    super.key });
+class CustomTextfield extends StatelessWidget {
+  const CustomTextfield(
+      {required this.controller,
+      required this.textInputType,
+      required this.textInputAction,
+      required this.hint,
+      this.isObscure = false,
+      this.hasSuffix = false,
+      this.onPressed,
+      super.key});
 
   final TextEditingController controller;
   final TextInputType textInputType;
@@ -29,34 +29,34 @@ class CustomTextfield extends StatelessWidget{
       textInputAction: textInputAction,
       obscureText: isObscure,
       decoration: InputDecoration(
-        filled: true,// Mengaktifkan latar belakang
+        filled: true, // Mengaktifkan latar belakang
         fillColor: Colors.white, // Warna latar belakang putih
-        suffixIcon: hasSuffix 
-        ? IconButton(
-            onPressed: onPressed, 
-            icon: Icon(
-              isObscure ? Icons.visibility : Icons.visibility_off,
-            color: Colors.orange[600],
-            ),
-          ) 
-        : null,
+        suffixIcon: hasSuffix
+            ? IconButton(
+                onPressed: onPressed,
+                icon: Icon(
+                  isObscure ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.orange[600],
+                ),
+              )
+            : null,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             width: 1,
             color: AppColors.darkGrey,
-          ), 
+          ),
           borderRadius: BorderRadius.circular(5),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             width: 1,
             color: AppColors.darkGrey,
-          ), 
+          ),
           borderRadius: BorderRadius.circular(5),
         ),
         hintText: hint,
         hintStyle: TextStyles.body,
       ),
-    );  
+    );
   }
 }

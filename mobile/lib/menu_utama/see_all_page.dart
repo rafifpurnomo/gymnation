@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_tubes/login_screen/styles.dart';
-import 'package:project_tubes/menu_utama/food_page.dart';
-import 'package:project_tubes/menu_utama/class_page.dart';
-import 'package:project_tubes/menu_utama/discount_page.dart';
-import 'package:project_tubes/menu_utama/facility_page.dart';
-import 'package:project_tubes/widget/all_list_item.dart';
+import 'package:gymnation/login_screen/styles.dart';
+import 'package:gymnation/menu_utama/food_page.dart';
+import 'package:gymnation/menu_utama/class_page.dart';
+import 'package:gymnation/menu_utama/discount_page.dart';
+import 'package:gymnation/menu_utama/facility_page.dart';
+import 'package:gymnation/widget/all_list_item.dart';
 
 class SeeAllPage extends StatelessWidget {
   const SeeAllPage({super.key});
@@ -16,7 +16,8 @@ class SeeAllPage extends StatelessWidget {
         title: Text('See All', style: TextStyles.title),
         backgroundColor: Colors.black,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white), // Ikon kembali
+          icon:
+              const Icon(Icons.arrow_back, color: Colors.white), // Ikon kembali
           onPressed: () {
             Navigator.pop(context); // Kembali ke halaman sebelumnya
           },
@@ -39,7 +40,8 @@ class SeeAllPage extends StatelessWidget {
                 return const ListItemWidget(
                   icon: Icons.restaurant,
                   title: 'Makanan',
-                  subtitle: 'Lihat berbagai pilihan makanan sehat.', // Deskripsi
+                  subtitle:
+                      'Lihat berbagai pilihan makanan sehat.', // Deskripsi
                   page: FoodPage(), // Halaman tujuan
                   backgroundColor: Colors.orange, // Warna latar belakang
                   iconColor: Colors.white, // Warna ikon
@@ -50,7 +52,8 @@ class SeeAllPage extends StatelessWidget {
                 return const ListItemWidget(
                   icon: Icons.list,
                   title: 'Fasilitas',
-                  subtitle: 'Temukan fasilitas yang tersedia di sini.', // Deskripsi
+                  subtitle:
+                      'Temukan fasilitas yang tersedia di sini.', // Deskripsi
                   page: FacilitiesPage(),
                   backgroundColor: Colors.orange, // Warna latar belakang
                   iconColor: Colors.white, // Warna ikon
@@ -72,7 +75,8 @@ class SeeAllPage extends StatelessWidget {
                 return const ListItemWidget(
                   icon: Icons.event_note,
                   title: 'Kelas',
-                  subtitle: 'Daftar kelas yang tersedia untuk Anda.', // Deskripsi
+                  subtitle:
+                      'Daftar kelas yang tersedia untuk Anda.', // Deskripsi
                   page: ClassPage(),
                   backgroundColor: Colors.orange, // Warna latar belakang
                   iconColor: Colors.white, // Warna ikon

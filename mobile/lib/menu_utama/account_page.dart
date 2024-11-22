@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:project_tubes/widget/account_widget.dart'; // Import widget terpisah
-import 'package:project_tubes/login_screen/login_screen.dart';
+import 'package:gymnation/widget/account_widget.dart'; // Import widget terpisah
+import 'package:gymnation/login_screen/login_screen.dart';
 
 class AccountPage extends StatelessWidget {
   final bool isSearching; // Tambahkan parameter isSearching
   final String searchQuery; // Tambahkan parameter searchQuery
-  final ValueChanged<String> onSearchQueryChanged; // Tambahkan handler untuk perubahan query
+  final ValueChanged<String>
+      onSearchQueryChanged; // Tambahkan handler untuk perubahan query
 
   const AccountPage({
     super.key,
@@ -28,7 +29,8 @@ class AccountPage extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent, // Background Scaffold dibuat transparan
+        backgroundColor:
+            Colors.transparent, // Background Scaffold dibuat transparan
         body: Column(
           children: [
             // Jika pencarian aktif, tampilkan TextField
@@ -54,7 +56,10 @@ class AccountPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color.fromARGB(255, 255, 157, 0), Color.fromARGB(255, 248, 145, 1)],
+                  colors: [
+                    Color.fromARGB(255, 255, 157, 0),
+                    Color.fromARGB(255, 248, 145, 1)
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -64,7 +69,8 @@ class AccountPage extends StatelessWidget {
                   // Foto Profil
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage('assets/images/icon-appbar.jpg'), // Gambar profil
+                    backgroundImage: AssetImage(
+                        'assets/images/icon-appbar.jpg'), // Gambar profil
                   ),
                   SizedBox(width: 16),
                   // Info Pengguna
@@ -129,9 +135,10 @@ class AccountPage extends StatelessWidget {
                     title: 'Sign Out',
                     onTap: () {
                       Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
-                    );// Aksi saat item diklik
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                      ); // Aksi saat item diklik
                     },
                   ),
                 ],

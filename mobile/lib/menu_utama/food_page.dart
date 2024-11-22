@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_tubes/login_screen/styles.dart';
-import 'package:project_tubes/widget/foodmenu_item.dart';
+import 'package:gymnation/login_screen/styles.dart';
+import 'package:gymnation/widget/foodmenu_item.dart';
 
 class FoodPage extends StatelessWidget {
   const FoodPage({super.key});
@@ -9,10 +9,16 @@ class FoodPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Healthy Food', style: TextStyles.title,),
+        title: Text(
+          'Healthy Food',
+          style: TextStyles.title,
+        ),
         backgroundColor: Colors.black,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white,), // Ikon kembali
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ), // Ikon kembali
           onPressed: () {
             Navigator.pop(context); // Kembali ke halaman sebelumnya
           },
@@ -23,7 +29,10 @@ class FoodPage extends StatelessWidget {
         height: double.infinity, // Mengisi tinggi penuh
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.grey.shade700, Colors.grey.shade900,],
+            colors: [
+              Colors.grey.shade700,
+              Colors.grey.shade900,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -37,7 +46,8 @@ class FoodPage extends StatelessWidget {
               Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(16.0), // Sesuaikan radius sesuai kebutuhan
+                    borderRadius: BorderRadius.circular(
+                        16.0), // Sesuaikan radius sesuai kebutuhan
                     child: Image.asset(
                       'assets/images/healthy-food.png', // Ganti dengan URL gambar Anda
                       fit: BoxFit.cover,
@@ -65,7 +75,8 @@ class FoodPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,// Menambahkan fontWeight untuk membuat teks bold
+                  fontWeight: FontWeight
+                      .bold, // Menambahkan fontWeight untuk membuat teks bold
                 ),
               ),
               const SizedBox(height: 24),
@@ -116,7 +127,8 @@ class FoodPage extends StatelessWidget {
                           children: [
                             const Text(
                               'Berbagai Macam Buah',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 10),
                             const Text(
@@ -131,7 +143,8 @@ class FoodPage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Tutup', style: TextStyle(color: Colors.orange)),
+                                  child: const Text('Tutup',
+                                      style: TextStyle(color: Colors.orange)),
                                 ),
                               ],
                             ),
@@ -165,7 +178,8 @@ class FoodPage extends StatelessWidget {
                           children: [
                             const Text(
                               'Berbagai Macam Sayur',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 10),
                             const Text(
@@ -180,7 +194,8 @@ class FoodPage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Tutup', style: TextStyle(color: Colors.orange)),
+                                  child: const Text('Tutup',
+                                      style: TextStyle(color: Colors.orange)),
                                 ),
                               ],
                             ),
@@ -214,7 +229,8 @@ class FoodPage extends StatelessWidget {
                           children: [
                             const Text(
                               'Dada Ayam',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 10),
                             const Text(
@@ -229,7 +245,8 @@ class FoodPage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Tutup', style: TextStyle(color: Colors.orange)),
+                                  child: const Text('Tutup',
+                                      style: TextStyle(color: Colors.orange)),
                                 ),
                               ],
                             ),
@@ -263,7 +280,8 @@ class FoodPage extends StatelessWidget {
                           children: [
                             const Text(
                               'Salad',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 10),
                             const Text(
@@ -278,7 +296,8 @@ class FoodPage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Tutup', style: TextStyle(color: Colors.orange)),
+                                  child: const Text('Tutup',
+                                      style: TextStyle(color: Colors.orange)),
                                 ),
                               ],
                             ),
@@ -312,7 +331,8 @@ class FoodPage extends StatelessWidget {
                           children: [
                             const Text(
                               'Oats',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 10),
                             const Text(
@@ -327,7 +347,8 @@ class FoodPage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Tutup', style: TextStyle(color: Colors.orange)),
+                                  child: const Text('Tutup',
+                                      style: TextStyle(color: Colors.orange)),
                                 ),
                               ],
                             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:project_tubes/login_screen/styles.dart';
+import 'package:gymnation/login_screen/styles.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class NotificationPage extends StatefulWidget {

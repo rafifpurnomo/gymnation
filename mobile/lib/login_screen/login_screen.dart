@@ -1,7 +1,7 @@
-import 'package:project_tubes/widget/custom_textfield.dart';
+import 'package:gymnation/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:project_tubes/login_screen/styles.dart';
-import 'package:project_tubes/menu_utama/home_page.dart';
+import 'package:gymnation/login_screen/styles.dart';
+import 'package:gymnation/menu_utama/home_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -7,6 +7,7 @@ class CustomTextfield extends StatelessWidget {
       required this.textInputType,
       required this.textInputAction,
       required this.hint,
+      required this.isEror,
       this.isObscure = false,
       this.hasSuffix = false,
       this.onPressed,
@@ -18,6 +19,7 @@ class CustomTextfield extends StatelessWidget {
   final String hint;
   final bool isObscure;
   final bool hasSuffix;
+  final bool isEror;
   final VoidCallback? onPressed;
 
   @override
@@ -41,16 +43,16 @@ class CustomTextfield extends StatelessWidget {
               )
             : null,
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             width: 1,
-            color: AppColors.darkGrey,
+            color: isEror ? Colors.red : AppColors.darkGrey,
           ),
           borderRadius: BorderRadius.circular(5),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             width: 1,
-            color: AppColors.darkGrey,
+            color: isEror ? Colors.red : AppColors.darkGrey,
           ),
           borderRadius: BorderRadius.circular(5),
         ),

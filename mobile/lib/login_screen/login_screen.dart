@@ -1,3 +1,5 @@
+import 'package:gymnation/api/loginAPI.dart';
+import 'package:gymnation/api/meAPI.dart';
 import 'package:gymnation/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gymnation/login_screen/styles.dart';
@@ -22,8 +24,74 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isObscureLoginPassword = true; // Untuk password login
   bool isObscureRegisterPassword = true; // Untuk password register
   bool isObscureConfirmPassword = true; // Untuk Confirm Password
+  String emailErrorMessage = '';
+  String passErrorMessage = '';
+  bool mailIsEror = false;
+  bool passIsEror = false;
+  final LoginAPI loginapi = LoginAPI();
+  final meAPI meapi = meAPI();
+
+  bool cekEmailnPass(String email, String pass) {
+    return (email.isNotEmpty && pass.isNotEmpty);
+  }
+
   // Simulasi fungsi login
-  void _login() {
+  void _login(String email, String password) async {
+    setState(() {
+      emailErrorMessage = '';
+      passErrorMessage = '';
+      mailIsEror = false;
+      passIsEror = false;
+    });
+
+    if (!cekEmailnPass(email, password)) {
+      emailErrorMessage = 'email boleh kosong';
+      passErrorMessage = 'password tidak boleh kosong';
+      mailIsEror = false;
+      passIsEror = false;
+    }
+
+    var response = await loginapi.login(email, password);
+    if (response['status'] == true) {
+      var user = await meapi.getUserProfile();
+
+      if (user['status'] == true && user['data'] != null) {
+        String role = user['data'][0][0]['role'];
+
+        if (role == 'pelanggan') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
+          );
+        }
+      } else {
+        setState(() {
+          emailErrorMessage = "Username or password is incorrect";
+          passErrorMessage = "Username or password is incorrect";
+
+          mailIsEror = true;
+          passIsEror = true;
+        });
+      }
+    } else {
+      setState(() {
+        emailErrorMessage =
+            response['massage'] ?? "Username or password is incorrect";
+        passErrorMessage =
+            response['massage'] ?? "Username or password is incorrect";
+
+        mailIsEror = true;
+        passIsEror = true;
+      });
+    }
+  }
+
+  void testing() {
     // Saat tombol "Login" ditekan, lakukan navigasi ke HomePage
     Navigator.pushReplacement(
       context,
@@ -90,13 +158,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 24),
                     // Fungsi memanggil custom teks field untuk login
                     CustomTextfield(
+                      isEror: mailIsEror,
                       controller: emailLoginController,
                       textInputType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       hint: 'Email or Username',
                     ),
                     const SizedBox(height: 16),
+                    if (emailErrorMessage.isNotEmpty)
+                      Text(
+                        emailErrorMessage,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     CustomTextfield(
+                      isEror: passIsEror,
                       controller: passwordLoginController,
                       textInputType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
@@ -110,12 +188,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       },
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (passErrorMessage.isNotEmpty)
+                      Text(
+                        passErrorMessage,
+                        style: TextStyle(color: Colors.red),
+                      ),
                     const SizedBox(height: 8),
                     Text('Forgot Password ?', style: TextStyles.title),
                     const SizedBox(height: 24),
                     // Button login
                     ElevatedButton(
-                      onPressed: _login,
+                      onPressed: () {
+                        String email = emailLoginController.text.trim();
+                        String pass = passwordLoginController.text.trim();
+                        // _login(email, pass);
+                        testing();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange[600], // background
                         shape: RoundedRectangleBorder(
@@ -139,214 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       textAlign: TextAlign.center,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        // Memunculkan modal bottom sheet saat teks "Sign Up" ditekan
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) {
-                            return StatefulBuilder(
-                              builder:
-                                  (BuildContext context, StateSetter setState) {
-                                return Wrap(
-                                  children: [
-                                    Container(
-                                      color: Colors.transparent,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(25),
-                                            topLeft: Radius.circular(25),
-                                          ),
-                                        ),
-                                        child: Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal:
-                                                  16), // Gantilah dengan `defaultMargin` jika sudah didefinisikan
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(height: 25),
-                                              Row(
-                                                children: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "Hallo...",
-                                                        style: TextStyles.body
-                                                            .copyWith(
-                                                          fontSize: 18,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Register",
-                                                        style: TextStyles.body
-                                                            .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 30,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const Spacer(), // Letakkan di sini untuk membuat jarak antara Column dan Image
-                                                  Center(
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        // Ketika ikon ditekan
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Image.asset(
-                                                        'assets/images/close.png',
-                                                        height: 30,
-                                                        width: 70,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              // Untuk Register
-                                              const SizedBox(height: 25),
-                                              CustomTextfield(
-                                                controller:
-                                                    emailRegisterController,
-                                                textInputType:
-                                                    TextInputType.emailAddress,
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                hint: 'info@example.com',
-                                              ),
-                                              const SizedBox(height: 16),
-                                              CustomTextfield(
-                                                controller:
-                                                    TextEditingController(), // Menggunakan controller yang berbeda
-                                                textInputType:
-                                                    TextInputType.text,
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                hint: 'Username',
-                                              ),
-                                              const SizedBox(height: 16),
-                                              CustomTextfield(
-                                                controller:
-                                                    passwordRegisterController,
-                                                textInputType: TextInputType
-                                                    .visiblePassword,
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                hint: 'Password',
-                                                isObscure:
-                                                    isObscureRegisterPassword, // Ubah sesuai field
-                                                hasSuffix: true,
-                                                onPressed: () {
-                                                  setState(() {
-                                                    isObscureRegisterPassword =
-                                                        !isObscureRegisterPassword; // Toggle untuk Password Register
-                                                  });
-                                                },
-                                              ),
-                                              const SizedBox(height: 16),
-                                              CustomTextfield(
-                                                controller:
-                                                    confirmPasswordController, // Menggunakan controller yang berbeda untuk Confirm Password
-                                                textInputType: TextInputType
-                                                    .visiblePassword,
-                                                textInputAction:
-                                                    TextInputAction.done,
-                                                hint: 'Confirm Password',
-                                                isObscure:
-                                                    isObscureConfirmPassword, // Ubah sesuai field
-                                                hasSuffix: true,
-                                                onPressed: () {
-                                                  setState(() {
-                                                    isObscureConfirmPassword =
-                                                        !isObscureConfirmPassword; // Toggle untuk Confirm Password
-                                                  });
-                                                },
-                                              ),
-                                              const SizedBox(height: 16),
-                                              ElevatedButton(
-                                                onPressed: () {},
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.orange[
-                                                          600], // background
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5), // border radius
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 16),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      // Ketika ikon ditekan
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      'Register',
-                                                      style: TextStyles.title
-                                                          .copyWith(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(height: 24),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Already have an account?",
-                                                    style: TextStyles.title
-                                                        .copyWith(fontSize: 18),
-                                                  ),
-                                                  const SizedBox(
-                                                      width:
-                                                          8), // Jarak antara dua teks
-                                                  InkWell(
-                                                    onTap: () {
-                                                      // Ketika "Log in" ditekan
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      "Log in",
-                                                      style: TextStyles.title
-                                                          .copyWith(
-                                                        fontSize: 18,
-                                                        color: Colors
-                                                            .orange, // Tambahkan warna agar terlihat seperti link
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
+                      onTap: () {},
                       child: Text(
                         'Sign Up',
                         style: TextStyles.body

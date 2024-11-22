@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:gymnation/api/carouselAPI.dart';
 import 'package:gymnation/menu_utama/notification_page.dart';
 import 'package:gymnation/widget/main_menu_item.dart'; // Pastikan ini mengarah ke widget yang benar
 import 'package:gymnation/menu_utama/see_all_page.dart';
@@ -166,7 +167,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 // Widget untuk konten halaman Home
-class HomeContent extends StatelessWidget {
+class HomeContent extends StatefulWidget {
   final bool isSearching;
   final String searchQuery;
   final ValueChanged<String> onSearchQueryChanged;
@@ -179,19 +180,47 @@ class HomeContent extends StatelessWidget {
   });
 
   @override
+  _HomeContentState createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent> {
+  List<Map<String, String>> _carouselData = [];
+  bool _isLoading = true; // Menandai jika data masih diambil
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCarouselData();
+  }
+
+  Future<void> _fetchCarouselData() async {
+    try {
+      final data = await CarouselAPI().fetchCarouselData();
+      setState(() {
+        _carouselData = data;
+        _isLoading = false; // Data berhasil diambil
+      });
+    } catch (e) {
+      print("Error fetching carousel: $e");
+      setState(() {
+        _isLoading = false; // Tetap hentikan loader jika ada error
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          // Jika pencarian aktif, tampilkan TextField
-          if (isSearching)
+          if (widget.isSearching)
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                onChanged: onSearchQueryChanged,
+                onChanged: widget.onSearchQueryChanged,
                 decoration: InputDecoration(
-                  filled: true, // Mengaktifkan pengisian warna latar belakang
-                  fillColor: Colors.white, // Warna latar belakang
+                  filled: true,
+                  fillColor: Colors.white,
                   hintText: 'Cari Makanan, Kelas, Fasilitas, atau Diskon...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -201,72 +230,65 @@ class HomeContent extends StatelessWidget {
                 ),
               ),
             ),
-          // Carousel Slider
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 225.0,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 5),
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              autoPlayCurve: Curves.easeInOut,
-              enlargeCenterPage: true,
-              viewportFraction: 0.8,
-            ),
-            items: [
-              // Daftar gambar dan keterangan
-              {
-                'image': 'assets/images/carousel1.png',
-                'text': 'POTONGAN MEMBER 50% Untuk Bulan INI',
-              },
-              {
-                'image': 'assets/images/carousel2.png',
-                'text': 'Promo Khusus Anggota Baru',
-              },
-              {
-                'image': 'assets/images/carousel3.png',
-                'text': 'Dapatkan Kelas Gratis untuk Bulan Pertama',
-              },
-            ].map((item) {
-              return Container(
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  image: DecorationImage(
-                    image:
-                        AssetImage(item['image']!), // Mengambil gambar dari map
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(16.0),
+          // Tampilkan loader saat data diambil
+          if (_isLoading)
+            const CircularProgressIndicator()
+          else if (_carouselData.isNotEmpty)
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 225.0,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 5),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.easeInOut,
+                enlargeCenterPage: true,
+                viewportFraction: 0.8,
+              ),
+              items: _carouselData.map((item) {
+                return Container(
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.0),
+                    image: DecorationImage(
+                      image: NetworkImage(item['image']!), // Gambar dari API
+                      fit: BoxFit.cover,
                     ),
-                    child: Text(
-                      item['text']!,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
-                      textAlign: TextAlign.center,
+                      child: Text(
+                        item['text']!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
-          ),
+                );
+              }).toList(),
+            )
+          else
+            const Text(
+              "Tidak ada data carousel.",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
           const SizedBox(height: 16),
           // GridView for Menu Items
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: GridView.count(
               shrinkWrap: true,
-              crossAxisCount: 3, // Tiga item per baris
+              crossAxisCount: 3,
               crossAxisSpacing: 8.0,
               mainAxisSpacing: 8.0,
               children: [
@@ -331,11 +353,4 @@ class HomeContent extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HomePage(),
-  ));
 }

@@ -2,7 +2,7 @@ const transporter = require("../config/mail.config");
 const userModel = require("../model/user");
 const jwt = require("jsonwebtoken");
 
-const addUser = async (req, res) => {
+const addPelanggan = async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
   const role = "pelanggan";
 
@@ -23,9 +23,8 @@ const addUser = async (req, res) => {
   }
 };
 
-const addAdmin = async (req, res) => {
-  const { first_name, last_name, email, password } = req.body;
-  const role = "admin";
+const addUser = async (req, res) => {
+  const { first_name, last_name, email, password, role } = req.body;
 
   try {
     const [cekUser] = await userModel.searchByEmail(email);
@@ -38,7 +37,7 @@ const addAdmin = async (req, res) => {
     }
 
     await userModel.addPelanggan(first_name, last_name, email, password, role);
-    res.status(200).json({ message: "admin registered successfully" });
+    res.status(200).json({ message: "user registered successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -144,7 +143,7 @@ const deleteUser = async(req, res)=>{
 
 
 module.exports = {
-  addAdmin,
+  addPelanggan,
   addUser,
   getAllUser,
   changePassword,

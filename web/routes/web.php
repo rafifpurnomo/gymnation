@@ -61,4 +61,5 @@ Route::middleware(['checkLogin'])->group(function () {
         return view('adminUser');
     })->name('admin.user');
     Route::delete('/admin/deleteUser', [userController::class, 'deleteUser'])->name('admin.deleteUser');
+    Route::post('/admin/tambahUser', [userController::class, 'addUser'])->name('admin.addUser');
 });

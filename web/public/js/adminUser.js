@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const data = window.apiData
-    loadUser(data)
-    modal()
+    const data = window.apiData;
+    loadUser(data);
+    modal();
 });
 
-function loadUser(data){
+function loadUser(data) {
     const tbody = $("#carouselTable tbody");
     tbody.empty();
 
@@ -25,7 +25,9 @@ function loadUser(data){
                         <td>
                             <button class="action-btn delete-btn" data-id="${
                                 user.id_user
-                            }" data-name="${user.first_name} ${user.last_name}">Delete</button>
+                            }" data-name="${user.first_name} ${
+                user.last_name
+            }">Delete</button>
                         </td>
                     </tr>
                 `;
@@ -41,7 +43,7 @@ function loadUser(data){
     }
 }
 
-function deleteUser(idUser, nama){
+function deleteUser(idUser, nama) {
     const confirmDelete = confirm(
         `Apakah kamu ingin menghapus akun: ${nama} ?`
     );
@@ -56,43 +58,47 @@ function deleteUser(idUser, nama){
                 ).content,
             },
             body: JSON.stringify({ id_user: idUser }),
-        }).then((response) => {
-            if (!response.ok) {
-                throw new Error("Gagal menghapus akun user.");
-            }
-            return response.json();
-        }).then((data) => {
-            if (data.success) {
-                Swal.fire({
-                    title: "success!",
-                    text: `Berhasil menghapus akun ${nama}`,
-                    icon: "success",
-                    confirmButtonText: "lanjutkan",
-                });
-            } else {
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Gagal menghapus akun user.");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    Swal.fire({
+                        title: "success!",
+                        text: `Berhasil menghapus akun ${nama}`,
+                        icon: "success",
+                        confirmButtonText: "lanjutkan",
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: data.error || "Gagal menghapus akun user",
+                        icon: "error",
+                        confirmButtonText: "Coba Lagi",
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error ketika menghapus akun:", error);
                 Swal.fire({
                     title: "Error!",
-                    text: data.error || "Gagal menghapus akun user",
+                    text: "Terjadi kesalahan saat menghapus akun",
                     icon: "error",
                     confirmButtonText: "Coba Lagi",
                 });
-            }
-        }).catch((error) => {
-            console.error("Error ketika menghapus akun:", error);
-            Swal.fire({
-                title: "Error!",
-                text: "Terjadi kesalahan saat menghapus akun",
-                icon: "error",
-                confirmButtonText: "Coba Lagi",
             });
-        });
     }
 }
 
-function modal(){
+function modal() {
     const tambahBtn = document.getElementById("tambahBtn");
     const modal = document.getElementById("modal");
     const closeBtn = document.querySelector(".close");
+    const userForm = document.getElementById("userForm");
 
     tambahBtn.addEventListener("click", () => {
         modal.style.display = "block";
@@ -108,19 +114,73 @@ function modal(){
         }
     });
 
-    document.getElementById('userForm').onsubmit = function (e) {
-        e.preventDefault(); 
+    userForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm_password').value;
-        const passwordError = document.getElementById('passwordError');
-
+        const first_name = document.getElementById("first_name").value;
+        const last_name = document.getElementById("last_name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm_password").value;
+        const role = document.getElementById("role").value;
+        const passwordError = document.getElementById("passwordError");
+        
         if (password !== confirmPassword) {
-            passwordError.style.display = 'block'; 
+            passwordError.style.display = "block";
         } else {
-            passwordError.style.display = 'none'; 
-
-            alert('Form berhasil disimpan!');
+            passwordError.style.display = "none";
         }
-    };
+
+        if (!first_name || !last_name || !email || !password || !confirmPassword || !role) {
+            alert("Harap lengkapi semua input.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("first_name", first_name);
+        formData.append("last_name", last_name);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("role", role);
+
+        try {
+            const response = await fetch("/admin/tambahUser", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content,
+                },
+            });
+            const result = await response.json();
+            if (result.success) {
+                Swal.fire({
+                    title: "success!",
+                    text: `Berhasil menambahkan user`,
+                    icon: "success",
+                    confirmButtonText: "lanjutkan",
+                });
+                document.getElementById("modal").style.display = "none";
+            } else {
+                Swal.fire({
+                    title: "Error!",
+                    text: result.error ||"Gagal menambahkan user",
+                    icon: "error",
+                    confirmButtonText: "Coba Lagi",
+                });
+            }
+        } catch (error) {
+            console.error("Error ketika menambahkan user:", error);
+            Swal.fire({
+                title: "Error!",
+                text: error||"Terjadi kesalahan saat menambahkan user",
+                icon: "error",
+                confirmButtonText: "Coba Lagi",
+            });
+        }
+
+    });
 }
+
+function addUser() {}

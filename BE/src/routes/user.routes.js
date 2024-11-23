@@ -3,10 +3,10 @@ const router = express.Router();
 const userController = require('../controller/user.controller');
 const verifyJWT = require('../middleware/verifyJWT');
 
+router.post('/addPelanggan', userController.addPelanggan);
 router.post('/addUser', userController.addUser);
 router.post('/changePassword', verifyJWT, userController.changePassword);
 router.post('/forgetPassword', userController.forgetPassword);
-router.post('/addAdmin', userController.addAdmin);
 router.get('/getAllUser', verifyJWT,userController.getAllUser);
 router.delete('/deleteUser/:id_user', verifyJWT, userController.deleteUser);
 

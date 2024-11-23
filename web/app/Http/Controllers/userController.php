@@ -62,4 +62,28 @@ class userController extends Controller
         }
     }
 
+    public function addUser(Request $request)
+    {
+        $token = session('token');
+
+        if (!$token) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        try {
+            $client = new Client();
+            $response = $client->post("http://localhost:4000/user/addUser", [
+                'headers' => [
+                    'Authorization' => "Bearer {$token}",
+                    'Accept' => 'application/json',
+                ],
+                'json' => $request->all(),
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'user berhasil dihapus']);
+        } catch (\Throwable $e) {
+            return response()->json(['success' => false, 'error' => 'gagal menghapus user: ' . $e->getMessage()]);
+        }
+    }
+
 }

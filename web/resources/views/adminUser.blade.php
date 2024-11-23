@@ -54,28 +54,28 @@
             <h2>Tambah Pengguna</h2>
             <form id="userForm">
                 <label for="first_name">First Name:</label><br>
-                <input type="text" id="first_name" name="first_name" required>
+                <input type="text" id="first_name" name="first_name" >
                 <br><br>
     
                 <label for="last_name">Last Name:</label><br>
-                <input type="text" id="last_name" name="last_name" required>
+                <input type="text" id="last_name" name="last_name" >
                 <br><br>
     
                 <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" >
                 <br><br>
     
                 <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" >
                 <br><br>
     
                 <label for="confirm_password">Konfirmasi Password:</label><br>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <input type="password" id="confirm_password" name="confirm_password" >
                 <p id="passwordError" style="color: red; display: none;">Password dan konfirmasi password tidak sesuai</p>
     
                 <div class="margin"></div>
                 <label for="role">Role:</label><br>
-                <select id="role" name="role" required>
+                <select id="role" name="role" >
                     <option value="">-- Pilih Role --</option>
                     <option value="admin">Admin</option>
                     <option value="pelanggan">Pelanggan</option>

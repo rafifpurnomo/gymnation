@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const data = window.apiData;
     loadUser(data);
-    modal();
+    addUser();
 });
 
 function loadUser(data) {
@@ -94,7 +94,7 @@ function deleteUser(idUser, nama) {
     }
 }
 
-function modal() {
+function addUser() {
     const tambahBtn = document.getElementById("tambahBtn");
     const modal = document.getElementById("modal");
     const closeBtn = document.querySelector(".close");
@@ -183,4 +183,3 @@ function modal() {
     });
 }
 
-function addUser() {}

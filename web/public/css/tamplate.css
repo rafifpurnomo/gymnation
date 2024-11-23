@@ -63,22 +63,3 @@ body {
 .nav-item i {
     font-size: 14px;
 }
-
-.logout-container {
-    min-width: 200px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.logout {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.title{
-    text-align: center;
-    margin: 50px 0px 0px 0px;
-}
-.img{
-    display: flex;
-    justify-content: center;
-}

@@ -68,7 +68,6 @@ const changePassword = async (req, res) => {
       success: true,
       massage: "password berhasil diubah",
     });
-    
   } catch (error) {
     res
       .status(500)
@@ -121,9 +120,9 @@ const forgetPassword = async (req, res) => {
   }
 };
 
-const deleteUser = async(req, res)=>{
-  const {id_user} = req.params;
-  console.log(id_user)
+const deleteUser = async (req, res) => {
+  const { id_user } = req.params;
+  console.log(id_user);
 
   try {
     const result = await userModel.deleteUser(id_user);
@@ -138,9 +137,24 @@ const deleteUser = async(req, res)=>{
       .status(500)
       .json({ succes: false, message: "Server error", error: error.message });
   }
-}
+};
 
+const updateProfile = async (req, res) => {
+  const { id_user } = req.params;
+  const {first_name, last_name, email} = req.body;
 
+  try {
+    await userModel.updateProfile(id_user, first_name, last_name, email);
+    res.status(200).json({ succes: true, message: "data user diperbarui" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Terjadi kesalahan saat memperbarui profil.",
+      succes: false,
+      serverMessage: error.message,
+    });
+  }
+};
 
 module.exports = {
   addPelanggan,
@@ -148,5 +162,6 @@ module.exports = {
   getAllUser,
   changePassword,
   forgetPassword,
-  deleteUser
+  deleteUser,
+  updateProfile
 };

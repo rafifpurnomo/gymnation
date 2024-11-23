@@ -3,6 +3,7 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\carouselController;
 use App\Http\Controllers\pengaudanController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\resetPass;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
@@ -53,10 +54,11 @@ Route::middleware(['checkLogin'])->group(function () {
     Route::delete('/admin/deleteCarousel', [carouselController::class, 'deleteCarousel'])->name('admin.deleteCarousel');
     Route::post('/admin/addCarousel', [carouselController::class, 'addCarousel'])->name('admin.addCarousel');
     
-    Route::get('/admin/profile', function () {
+    Route::get('/admin/profile', [profileController::class, 'profileAdmin'], function () {
         return view('adminProfile');
     })->name('admin.profile');
-    
+    Route::post('/admin/editProfile', [profileController::class, 'updateProfile'])->name('admin.updateProfile');
+
     Route::get('/admin/user', [userController::class, 'userReports'],function () {
         return view('adminUser');
     })->name('admin.user');

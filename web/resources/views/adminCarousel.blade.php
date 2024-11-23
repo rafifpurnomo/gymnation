@@ -22,9 +22,6 @@
                 <a href="/admin/profile" class="nav-item"> Profil </a>
             </div>
         </div>
-        <div class="logout-container">
-            <a href="#" class="nav-item logout"> Logout </a>
-        </div>
     </nav>
     <div class="tableData">
         <h1>Data Carousel</h1>

@@ -9,5 +9,6 @@ router.post('/changePassword', verifyJWT, userController.changePassword);
 router.post('/forgetPassword', userController.forgetPassword);
 router.get('/getAllUser', verifyJWT,userController.getAllUser);
 router.delete('/deleteUser/:id_user', verifyJWT, userController.deleteUser);
+router.put('/updateProfile/:id_user', verifyJWT, userController.updateProfile);
 
 module.exports = router;

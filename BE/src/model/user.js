@@ -42,8 +42,9 @@ const changePassword = async (id, newPassword) => {
     return conn.execute(SQLQuery, [hashedPass, id]);
 }
 
-const updateProfile = async (id, first_name, last_name, email, img_path) => {
-
+const updateProfile = async (id, first_name, last_name, email) => {
+    const SQLQuery = "UPDATE user SET first_name = ?, last_name = ?, email = ? WHERE id_user = ?"
+    return conn.execute(SQLQuery, [first_name, last_name, email, id])
 }
 
 module.exports = {
@@ -53,5 +54,6 @@ module.exports = {
     searchByID,
     searchByEmail,
     deleteUser,
-    changePassword
+    changePassword,
+    updateProfile
 }

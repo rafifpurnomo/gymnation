@@ -19,9 +19,6 @@
                 <a href="/admin/profile" class="nav-item"> Profil </a>
             </div>
         </div>
-        <div class="logout-container">
-            <a href="#" class="nav-item logout"> Logout </a>
-        </div>
     </nav>
     <h1 class="title">Admin Page Gymnation</h1>
     <div class="img">

@@ -1,0 +1,126 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const data = window.apiData
+    loadUser(data)
+    modal()
+});
+
+function loadUser(data){
+    const tbody = $("#carouselTable tbody");
+    tbody.empty();
+
+    if (!data.dataUser.data || data.dataUser.data.length === 0) {
+        tbody.append(
+            `<tr>
+                <td colspan="4" style="text-align: center;">Data Not Found</td>
+            </tr>`
+        );
+    } else {
+        data.dataUser.data.forEach((user, index) => {
+            const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${user.first_name} ${user.last_name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>
+                            <button class="action-btn delete-btn" data-id="${
+                                user.id_user
+                            }" data-name="${user.first_name} ${user.last_name}">Delete</button>
+                        </td>
+                    </tr>
+                `;
+
+            tbody.append(row);
+        });
+
+        $(".delete-btn").on("click", function () {
+            const userId = $(this).data("id");
+            const name = $(this).data("name");
+            deleteUser(userId, name);
+        });
+    }
+}
+
+function deleteUser(idUser, nama){
+    const confirmDelete = confirm(
+        `Apakah kamu ingin menghapus akun: ${nama} ?`
+    );
+
+    if (confirmDelete) {
+        fetch("/admin/deleteUser", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content,
+            },
+            body: JSON.stringify({ id_user: idUser }),
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error("Gagal menghapus akun user.");
+            }
+            return response.json();
+        }).then((data) => {
+            if (data.success) {
+                Swal.fire({
+                    title: "success!",
+                    text: `Berhasil menghapus akun ${nama}`,
+                    icon: "success",
+                    confirmButtonText: "lanjutkan",
+                });
+            } else {
+                Swal.fire({
+                    title: "Error!",
+                    text: data.error || "Gagal menghapus akun user",
+                    icon: "error",
+                    confirmButtonText: "Coba Lagi",
+                });
+            }
+        }).catch((error) => {
+            console.error("Error ketika menghapus akun:", error);
+            Swal.fire({
+                title: "Error!",
+                text: "Terjadi kesalahan saat menghapus akun",
+                icon: "error",
+                confirmButtonText: "Coba Lagi",
+            });
+        });
+    }
+}
+
+function modal(){
+    const tambahBtn = document.getElementById("tambahBtn");
+    const modal = document.getElementById("modal");
+    const closeBtn = document.querySelector(".close");
+
+    tambahBtn.addEventListener("click", () => {
+        modal.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    document.getElementById('userForm').onsubmit = function (e) {
+        e.preventDefault(); 
+
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        const passwordError = document.getElementById('passwordError');
+
+        if (password !== confirmPassword) {
+            passwordError.style.display = 'block'; 
+        } else {
+            passwordError.style.display = 'none'; 
+
+            alert('Form berhasil disimpan!');
+        }
+    };
+}

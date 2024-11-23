@@ -122,6 +122,25 @@ const forgetPassword = async (req, res) => {
   }
 };
 
+const deleteUser = async(req, res)=>{
+  const {id_user} = req.params;
+  console.log(id_user)
+
+  try {
+    const result = await userModel.deleteUser(id_user);
+    if (result[0].affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ succes: false, message: "data user tidak ditemukan" });
+    }
+    res.status(200).json({ succes: true, message: "data user dihapus" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ succes: false, message: "Server error", error: error.message });
+  }
+}
+
 
 
 module.exports = {
@@ -130,4 +149,5 @@ module.exports = {
   getAllUser,
   changePassword,
   forgetPassword,
+  deleteUser
 };

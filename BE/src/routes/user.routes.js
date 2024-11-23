@@ -7,6 +7,7 @@ router.post('/addUser', userController.addUser);
 router.post('/changePassword', verifyJWT, userController.changePassword);
 router.post('/forgetPassword', userController.forgetPassword);
 router.post('/addAdmin', userController.addAdmin);
-router.get('/getAllUser', userController.getAllUser);
+router.get('/getAllUser', verifyJWT,userController.getAllUser);
+router.delete('/deleteUser/:id_user', verifyJWT, userController.deleteUser);
 
 module.exports = router;

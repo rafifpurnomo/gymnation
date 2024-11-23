@@ -204,8 +204,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         String email = emailLoginController.text.trim();
                         String pass = passwordLoginController.text.trim();
-                        // _login(email, pass);
-                        testing();
+                        _login(email, pass);
+                        // testing();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange[600], // background

@@ -4,6 +4,7 @@ import 'package:gymnation/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gymnation/login_screen/styles.dart';
 import 'package:gymnation/menu_utama/home_page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,6 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool passIsEror = false;
   final LoginAPI loginapi = LoginAPI();
   final meAPI meapi = meAPI();
+
+  @override
+  void initState() {
+    super.initState();
+    requestNotificationPermission();
+  }
 
   bool cekEmailnPass(String email, String pass) {
     return (email.isNotEmpty && pass.isNotEmpty);
@@ -97,6 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
       context,
       MaterialPageRoute(builder: (context) => const HomePage()),
     );
+  }
+
+  Future<void> requestNotificationPermission() async {
+    if (await Permission.notification.isDenied) {
+      await Permission.notification.request();
+    }
   }
 
   @override

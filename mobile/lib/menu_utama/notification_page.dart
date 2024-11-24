@@ -24,7 +24,7 @@ class _NotificationPageState extends State<NotificationPage> {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings(
-            '@mipmap/ic_launcher'); // gunakan ikon aplikasi
+            '@mipmap/iconapps'); // gunakan ikon aplikasi
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
 

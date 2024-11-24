@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymnation/api/meAPI.dart';
+import 'package:gymnation/menu_utama/profile_page.dart';
 import 'package:gymnation/widget/account_widget.dart'; // Import widget terpisah
 import 'package:gymnation/login_screen/login_screen.dart';
 
@@ -21,13 +22,12 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   final meAPI meapi = meAPI();
-  var user; // Untuk menyimpan data pengguna
-  bool isLoading = true; // Untuk menampilkan indikator loading
+  var user;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    initUser(); // Panggil fungsi untuk mengambil data user
-    print(user);
+    initUser();
   }
 
   Future<void> initUser() async {
@@ -38,6 +38,7 @@ class _AccountPageState extends State<AccountPage> {
           user = response['data'];
           isLoading = false;
         });
+        print(user[0][0]);
       } else {
         print("Failed to retrieve user data: ${response['message']}");
         setState(() {
@@ -49,6 +50,23 @@ class _AccountPageState extends State<AccountPage> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  void navigateToProfile() async {
+    // Navigate to ProfilePage and wait for it to complete
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ProfilePage()),
+    );
+
+    // Refresh data when returning from ProfilePage
+    if (result == true) {
+      // You can set this value when popping ProfilePage
+      setState(() {
+        isLoading = true; // Show loading indicator
+      });
+      await initUser(); // Reload user data
     }
   }
 
@@ -116,6 +134,7 @@ class _AccountPageState extends State<AccountPage> {
                             Text(
                               user != null
                                   ? user![0][0]['first_name'] +
+                                          ' ' +
                                           user![0][0]['last_name'] ??
                                       'Nama Tidak Diketahui'
                                   : 'Loading...',
@@ -153,7 +172,9 @@ class _AccountPageState extends State<AccountPage> {
                         MenuItemWidget(
                           icon: Icons.person,
                           title: 'View Profile',
-                          onTap: () {},
+                          onTap: () {
+                            navigateToProfile();
+                          },
                         ),
                         MenuItemWidget(
                           icon: Icons.settings,

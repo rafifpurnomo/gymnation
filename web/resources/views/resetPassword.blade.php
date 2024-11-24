@@ -15,19 +15,31 @@
     {{-- CONTENT --}}
     <div class="main">
         <div class="login">
-            <img class="GymnationLogo" src="{{ asset('assets/icon-appbar.png') }}" alt="Gymnation Logo" />
-            <div class="input">
+            <div class="img">
+                <img class="GymnationLogo" src="{{ asset('assets/icon-appbar.png') }}" alt="Gymnation Logo" />
+
+            </div>
+            <div class="errorMassage" id="errMassage">
+                <div class="massage">
+                    <p>Your password reset link is not valid, or already used.</p>
+                </div>
+            </div>
+            <div class="linkTO" id="linkToLoginpage">
+                <a href="/admin">kembali ke login page</a>
+            </div>
+            <div class="input" id="inputContainer">
                 <div class="container">
                     <form action="" method="POST" class="container">
                         @csrf
                         <div class="inputMail">
                             <label for="password">new password</label>
-                            <input type="password" id="newPassword" name="password" class="@error('password') is-invalid @enderror" required>
+                            <input type="password" id="newPassword" name="password"
+                                class="@error('password') is-invalid @enderror" required>
                         </div>
                         <div class="inputPass">
                             <label for="password">confirm Password</label>
-                            <input type="password" id="confirmPass" name="password" class="@error('password') is-invalid @enderror"
-                                required>
+                            <input type="password" id="confirmPass" name="password"
+                                class="@error('password') is-invalid @enderror" required>
                         </div>
                         <div class="btn">
                             <button type="submit" id="resetPasswordBtn">Submit</button>

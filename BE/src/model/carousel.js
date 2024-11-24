@@ -6,7 +6,7 @@ const getAllPost = () => {
 }
 
 const getPostByID = (id_carousel) => {
-    const SQLQuery = "SELECT * FROM carousel WHERE id_carousel";
+    const SQLQuery = "SELECT * FROM carousel WHERE id_carousel = ?";
     return conn.execute(SQLQuery, [id_carousel]);
 }
 

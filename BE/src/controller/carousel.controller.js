@@ -60,16 +60,16 @@ const deleteCarouselData = async (req, res) => {
   const { id_carousel } = req.params;
 
   try {
-    const carouselData = (await carouselModel.getPostByID(id_carousel))[0];
+    const [carouselData] = await carouselModel.getPostByID(id_carousel);
+    const found = carouselData[0]
 
-    if (!carouselData) {
+    if (!found) {
       return res
         .status(404)
         .json({ message: "Data carousel atau gambar tidak ditemukan." });
     }
 
-    const { img_path } = carouselData[0]; 
-    console.log(img_path);
+    const { img_path } = found; 
 
     const filePath = img_path.split("/o/")[1].split("?")[0];
     const decodedPath = decodeURIComponent(filePath);

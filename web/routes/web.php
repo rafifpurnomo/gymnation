@@ -34,11 +34,12 @@ Route::get('/registerPage', function () {
     return view('register');
 })->name('register.form');
 
-Route::get('/resetPassword/{token}', [resetPass::class, 'showResetPasswordForm'])->name('resetPassword');
 Route::post('/requestResetPassword', [resetPass::class, 'requestResetPass'])->name('requestReset.password');
+Route::get('/resetPassword/{token}', [resetPass::class, 'showResetPasswordForm'])->name('resetPassword');
 Route::post('/resetPassword/{token}', [resetPass::class, 'resetPassword'])->name('reset.password');
 
 Route::middleware(['checkLogin'])->group(function () {
+    
     Route::get('/admin/Home', function () {
         return view('adminHome');
     })->name('admin.home');

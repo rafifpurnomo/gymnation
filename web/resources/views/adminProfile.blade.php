@@ -58,7 +58,7 @@
                             <button id="editAccountBtn">edit akun</button>
                         </div>
                         <div class="btnLogOut">
-                            <button type="submit">Logout</button>
+                            <button type="button" onclick="logout()">Logout</button>
                         </div>
                     </div>
                 </form>

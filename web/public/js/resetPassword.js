@@ -1,10 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
+    cekData()
+});
+
+function cekData(){
     const data = window.apiData;
     const token = window.apiData.token;
-    console.log(token);
+    const errMassage = document.getElementById("errMassage");
+    const inputContainer = document.getElementById("inputContainer");
+    const linkToLoginpage = document.getElementById("linkToLoginpage")
 
-    submit(data, token);
-});
+    if (data.userData.exception === null || !data || !data.userData) {
+        errMassage.style.display = "block";
+        inputContainer.style.display = "none";
+        linkToLoginpage.style.display = "block";
+    } else {
+        inputContainer.style.display = "flex";
+        errMassage.style.display = "none";
+        linkToLoginpage.style.display = "none";
+        submit(data, token);
+    }
+}
 
 function submit(data, token) {
     document
@@ -82,7 +97,7 @@ function logout() {
     })
     .then(response => {
         if (response.ok) {
-            window.location.href = '/loginPage';
+            // window.location.href = '/admin';
         }
     })
     .catch(error => {
